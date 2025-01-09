@@ -4,8 +4,13 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import connectDB from "./db/connectDB.js";
+// import router
+import userRouter from "./routes/userRoute.js";
 
 const app = express();
+
+app.use(express.json());
+app.use("/", userRouter);
 
 const start = async () => {
   try {
