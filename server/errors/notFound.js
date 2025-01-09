@@ -1,11 +1,11 @@
 import CustomAPIError from "./custom_api.js";
 import { StatusCodes } from "http-status-codes";
 
-class BadRequestError extends CustomAPIError {
+class NotFoundError extends CustomAPIError {
   constructor(message) {
     super(message);
-    this.statusCode = StatusCodes.BAD_REQUEST;
+    this.statusCode = StatusCodes.NOT_FOUND;
   }
 }
 
-export default BadRequestError;
+export default NotFoundError;
