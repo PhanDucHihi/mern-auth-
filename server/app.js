@@ -4,13 +4,21 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import connectDB from "./db/connectDB.js";
-// import router
+// import routers
 import userRouter from "./routes/userRoute.js";
+import authRouter from "./routes/authRoute.js";
+//import middlewares
+import notFound from "./middlewares/notFound.middleware.js";
+import errorHandlerMiddleWare from "./middlewares/errrorhandler.middlerWare.js";
 
 const app = express();
 
 app.use(express.json());
-app.use("/", userRouter);
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/user", userRouter);
+
+app.use(notFound);
+app.use(errorHandlerMiddleWare);
 
 const start = async () => {
   try {
