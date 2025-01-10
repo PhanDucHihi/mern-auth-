@@ -1,5 +1,6 @@
 import { StatusCodes } from "http-status-codes";
-import { BadRequestError } from "../errors/index.js";
+import jwt from "jsonwebtoken";
+import { BadRequestError, Unauthenticated } from "../errors/index.js";
 import User from "../models/UserModal.js";
 
 const signUp = async (req, res) => {
@@ -14,4 +15,40 @@ const signUp = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ msg: "Created successfully" });
 };
 
-export { signUp };
+const signIn = async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    throw new BadRequestError("Please provide email and password");
+  }
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new Unauthenticated("Invalid credentials1");
+  }
+  const isMatch = await user.comparePW(password);
+  if (!isMatch) {
+    throw new Unauthenticated("Invalid credentials2");
+  }
+  const accessToken = user.createJWT();
+  const refreshToken = jwt.sign(
+    { userId: user._id },
+    process.env.REFRESH_TOKEN_SECRET,
+    { expiresIn: "30m" }
+  );
+  user.refreshToken = refreshToken;
+  await user.save();
+  const userData = {
+    username: user.username,
+    email: user.email,
+  };
+
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+    maxAge: 30 * 60 * 1000,
+  });
+
+  res.json({ userData, accessToken });
+};
+
+export { signUp, signIn };
