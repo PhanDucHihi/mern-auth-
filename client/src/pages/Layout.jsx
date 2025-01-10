@@ -1,7 +1,9 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
+import { useGlobalAuthContext } from "../context/AuthProvider";
 
 const Layout = () => {
+  const { auth, setAuth } = useGlobalAuthContext();
   return (
     <div>
       <div className="w-full bg-stone-300 mb-8">
@@ -10,9 +12,13 @@ const Layout = () => {
             Auth App
           </Link>
           <div className="flex gap-2 font-medium">
-            <Link to="/">Home</Link>
+            <Link to="/home">Home</Link>
             <Link to="/about">About</Link>
-            <Link to="/sign-in">Sign in</Link>
+            {auth?.email ? (
+              <Link to="/profile">Profile</Link>
+            ) : (
+              <Link to="/sign-in">Sign in</Link>
+            )}
           </div>
         </div>
       </div>

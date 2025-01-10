@@ -1,6 +1,10 @@
 import React from "react";
+import { useGlobalAuthContext } from "../context/AuthProvider";
 
 const Home = () => {
+  // const { auth } = useGlobalAuthContext();
+  // console.log(auth);
+
   return (
     <div className="container mx-auto max-w-[800px]">
       <h1 className="text-3xl font-bold mb-4">Welcome to My MERN Auth App!</h1>
