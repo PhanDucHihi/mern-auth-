@@ -24,4 +24,7 @@
     @apply py-3 bg-red-600 hover:bg-red-700 text-sm rounded-full border border-cyan-100
       text-white font-medium;
   }
+  .img-avatar {
+    @apply w-[50px] h-[50px] rounded-full object-cover
+  }
 }

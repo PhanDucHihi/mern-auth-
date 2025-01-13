@@ -19,6 +19,7 @@ const UserSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    imageUrl: String,
     refreshToken: String,
   },
   { timestamps: true }

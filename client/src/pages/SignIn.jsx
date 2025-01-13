@@ -36,13 +36,12 @@ const SignIn = () => {
           withCredentials: true,
         }
       );
-      console.log(response);
       const accessToken = response.data.accessToken;
       setAuth({ email, accessToken });
       // console.log(auth);
       navigate("/home");
     } catch (error) {
-      // setError(error.response.data.msg);
+      setError(error.response.data.msg);
     }
   };
   return (
