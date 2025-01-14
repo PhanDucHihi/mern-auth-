@@ -32,7 +32,7 @@ const signIn = async (req, res) => {
   const refreshToken = jwt.sign(
     { userId: user._id, username: user.username },
     process.env.REFRESH_TOKEN_SECRET,
-    { expiresIn: "1m" }
+    { expiresIn: "5m" }
   );
   user.refreshToken = refreshToken;
   await user.save();
@@ -45,7 +45,7 @@ const signIn = async (req, res) => {
     httpOnly: true,
     secure: true,
     sameSite: "None",
-    maxAge: 1 * 60 * 1000,
+    maxAge: 5 * 60 * 1000,
   });
 
   res.json({ userData, accessToken });

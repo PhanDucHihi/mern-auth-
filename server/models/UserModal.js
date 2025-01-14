@@ -17,7 +17,6 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      unique: true,
     },
     imageUrl: String,
     refreshToken: String,
@@ -39,7 +38,7 @@ UserSchema.methods.createJWT = function () {
     },
     process.env.ACCESS_TOKEN_SECRET,
     {
-      expiresIn: "10s",
+      expiresIn: "1m",
     }
   );
 };
