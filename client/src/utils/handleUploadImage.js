@@ -10,8 +10,8 @@ const imageUpload = async (imageFile) => {
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(response);
-    return response.data;
+    
+    return response.data.msg;
   } catch (error) {
     console.log(error);
   }

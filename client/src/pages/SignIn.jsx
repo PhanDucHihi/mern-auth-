@@ -8,7 +8,6 @@ import useRefreshToken from "../hooks/useRefreshToken.js";
 
 const SignIn = () => {
   const { auth, setAuth } = useGlobalAuthContext();
-  const refresh = useRefreshToken();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState();
@@ -59,9 +58,6 @@ const SignIn = () => {
         {error && <p className="text-sm text-red-500 pb-1">{error}</p>}
         <button type="submit" className="button-primary">
           SIGN IN
-        </button>
-        <button onClick={() => refresh()} className="button-primary">
-          Refresh
         </button>
         <div>
           Create an account?{" "}

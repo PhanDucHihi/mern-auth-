@@ -18,7 +18,10 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    imageUrl: String,
+    imageUrl: {
+      type: String,
+      default: "http://localhost:3000/assets/defaultAvatar.jpg",
+    },
     refreshToken: String,
   },
   { timestamps: true }

@@ -7,10 +7,12 @@ import About from "./pages/About";
 import NoPage from "./pages/NoPage";
 import Profile from "./pages/Profile";
 import RequireAuth from "./components/RequireAuth";
+import { ToastContainer, Zoom } from "react-toastify";
 
 function App() {
   return (
     <Router>
+      <ToastContainer autoClose={3000} transition={Zoom} />
       <Routes>
         {/* Public routes */}
         <Route path="/" element={<Layout />}>

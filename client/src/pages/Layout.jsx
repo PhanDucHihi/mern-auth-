@@ -5,10 +5,11 @@ import DefaultAvatar from "../components/DefaultAvatar";
 
 const Layout = () => {
   const { auth, setAuth } = useGlobalAuthContext();
+
   return (
     <div>
       <div className="w-full bg-stone-300 mb-8">
-        <div className="flex justify-between items-center container mx-auto px-3 py-3">
+        <div className="flex justify-between items-center container mx-auto px-8 py-3">
           <Link to="/" className="text-xl font-bold">
             Auth App
           </Link>

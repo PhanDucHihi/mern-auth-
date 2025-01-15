@@ -26,18 +26,28 @@ const updateUserInfo = async (req, res) => {
   if (userId !== id) {
     throw new Unauthenticated("You can update only your account1");
   }
-  if (password === "" || username === "" || email === "") {
-    throw new BadRequestError("username, email or password cannot be empty");
+  if (username === "" || email === "") {
+    throw new BadRequestError("username, email  cannot be empty");
   }
-  const salt = await bcrypt.genSalt(10);
-  req.body.password = await bcrypt.hash(password, salt);
-  const updatedUser = await User.findByIdAndUpdate({ _id: id }, req.body, {
-    returnDocument: "after",
-  });
-  if (!updatedUser) {
+
+  const user = await User.findOne({ _id: id });
+  if (!user) {
     throw new BadRequestError(`No user with id ${id}`);
   }
-  res.status(StatusCodes.OK).json({ updatedUser });
+  // continue here
+  const isMatch = await user.comparePW(password);
+
+  if (!isMatch) {
+    throw new Unauthenticated(`password is invalid`);
+  }
+
+  user.username = username;
+  user.email = email;
+  user.imageUrl = imageUrl;
+  user.password = password;
+
+  await user.save();
+  res.status(StatusCodes.OK).json({ updatedUser: user });
 };
 
 export { getUserInfo, updateUserInfo };
