@@ -5,8 +5,11 @@ import { toast } from "react-toastify";
 import useAxiosPrivate from "../hooks/useAxiosPrivate.js";
 import { getUser } from "../redux/slices/userSlice.js";
 import imageUpload from "../utils/handleUploadImage.js";
+import axios from "../api/axios.js";
+import { useGlobalAuthContext } from "../context/AuthProvider.jsx";
 
 const Profile = () => {
+  const { setAuth } = useGlobalAuthContext();
   const { currentUser } = useSelector((state) => state.user);
   console.log(currentUser);
 
@@ -59,8 +62,14 @@ const Profile = () => {
     }
   };
 
-
-
+  const handleLogOut = async () => {
+    try {
+      setAuth({});
+      await axios.get("/auth/logout", { withCredentials: true });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="max-w-[600px] mx-auto">
       <h1 className="text-2xl font-bold text-center mb-6">Update</h1>
@@ -80,6 +89,12 @@ const Profile = () => {
           type="email"
           placeholder="email"
         />
+        <p
+          onClick={handleLogOut}
+          className=" text-red-400 cursor-pointer text-end"
+        >
+          LogOut
+        </p>
         <button type="submit" className="button-primary">
           Update
         </button>

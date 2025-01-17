@@ -6,12 +6,7 @@ const DefaultAvatar = () => {
 
   return (
     <div className="relative">
-      <img
-        onClick={() => setIsShowLogOut(true)}
-        className="img-avatar relative"
-        src={currentUser.imageUrl}
-        alt=""
-      />
+      <img className="img-avatar relative" src={currentUser.imageUrl} alt="" />
     </div>
   );
 };

@@ -58,14 +58,14 @@ const logOut = async (req, res) => {
   if (!cookies?.refreshToken) return res.sendStatus(204);
   const refreshToken = cookies.refreshToken;
 
-  const foundUser = await USer.findOne({ refreshToken }).exec();
+  const foundUser = await User.findOne({ refreshToken }).exec();
   if (!foundUser) {
     res.clearCookie("refreshToken", {
       httpOnly: true,
-      sameSites: "None",
+      sameSite: "None",
       secure: true,
     });
-    res.sendStatus(204);
+    return res.sendStatus(204);
   }
 
   //delete refreshToken in db
@@ -77,7 +77,7 @@ const logOut = async (req, res) => {
     sameSite: "None",
     secure: true,
   });
-  res.sendStatus(204);
+  res.status(200).json({ msg: "LogOut successFully" });
 };
 
 export { signUp, signIn, logOut };
