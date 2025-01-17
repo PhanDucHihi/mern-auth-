@@ -39,6 +39,8 @@ const signIn = async (req, res) => {
   const userData = {
     username: user.username,
     email: user.email,
+    imageUrl: user.imageUrl,
+    _id: user._id,
   };
 
   res.cookie("refreshToken", refreshToken, {

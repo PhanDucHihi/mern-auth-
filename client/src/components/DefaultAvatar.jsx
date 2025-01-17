@@ -1,10 +1,11 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const DefaultAvatar = () => {
-  const urlImageDefault = "http://localhost:3000/assets/defaultAvatar.jpg";
+  const { currentUser } = useSelector((state) => state.user);
   return (
     <div>
-      <img className="img-avatar" src={urlImageDefault} alt="" />
+      <img className="img-avatar" src={currentUser.imageUrl} alt="" />
     </div>
   );
 };

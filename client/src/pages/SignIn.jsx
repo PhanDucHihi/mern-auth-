@@ -1,19 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Password from "../components/input/password";
-import axios from "../api/axios.js";
+import axios, { axiosPrivate } from "../api/axios.js";
 import validateEmail from "../utils/validateEmail.js";
 import { useGlobalAuthContext } from "../context/AuthProvider.jsx";
 import useRefreshToken from "../hooks/useRefreshToken.js";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../redux/slices/userSlice.js";
 
 const SignIn = () => {
   const { auth, setAuth } = useGlobalAuthContext();
+  const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState();
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!validateEmail(email)) {
       setError("Please provide a valid email address");
       return;
@@ -37,12 +42,16 @@ const SignIn = () => {
       );
       const accessToken = response.data.accessToken;
       setAuth({ email, accessToken });
+      dispatch(getUser(response.data.userData));
       // console.log(auth);
       navigate("/home");
     } catch (error) {
+      // console.log(error);
+
       setError(error.response.data.msg);
     }
   };
+
   return (
     <div className="max-w-[600px] mx-auto">
       <h1 className="text-2xl font-bold text-center mb-6">Sign In</h1>
