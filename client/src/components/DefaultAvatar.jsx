@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 const DefaultAvatar = () => {
   const { currentUser } = useSelector((state) => state.user);
+
   return (
-    <div>
-      <img className="img-avatar" src={currentUser.imageUrl} alt="" />
+    <div className="relative">
+      <img
+        onClick={() => setIsShowLogOut(true)}
+        className="img-avatar relative"
+        src={currentUser.imageUrl}
+        alt=""
+      />
     </div>
   );
 };

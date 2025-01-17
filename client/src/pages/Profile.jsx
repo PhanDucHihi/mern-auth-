@@ -59,6 +59,8 @@ const Profile = () => {
     }
   };
 
+
+
   return (
     <div className="max-w-[600px] mx-auto">
       <h1 className="text-2xl font-bold text-center mb-6">Update</h1>

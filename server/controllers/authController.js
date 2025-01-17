@@ -53,4 +53,31 @@ const signIn = async (req, res) => {
   res.json({ userData, accessToken });
 };
 
-export { signUp, signIn };
+const logOut = async (req, res) => {
+  const cookies = req.cookies;
+  if (!cookies?.refreshToken) return res.sendStatus(204);
+  const refreshToken = cookies.refreshToken;
+
+  const foundUser = await USer.findOne({ refreshToken }).exec();
+  if (!foundUser) {
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      sameSites: "None",
+      secure: true,
+    });
+    res.sendStatus(204);
+  }
+
+  //delete refreshToken in db
+  foundUser.refreshToken = "";
+  await foundUser.save();
+
+  res.clearCookie("refreshToken", {
+    httpOnly: true,
+    sameSite: "None",
+    secure: true,
+  });
+  res.sendStatus(204);
+};
+
+export { signUp, signIn, logOut };
